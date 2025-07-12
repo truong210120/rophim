@@ -2,6 +2,7 @@
 import {
   faAngleRight,
   faArrowRight,
+  faAward,
   faHeart,
   faInfo,
   faPlay,
@@ -14,9 +15,9 @@ import { toast } from "react-toastify";
 import Topic from "@/data/phimhay";
 import ListMovie from "@/data/phimhay";
 import { useRouter } from "next/navigation";
-import ModalMovie from "@/component/ModalCard";
 import { IMovie } from "../interface";
 import ModalCard from "@/component/ModalCard";
+import { useRef } from "react";
 interface Iimage {
   image: string;
 }
@@ -219,6 +220,22 @@ export default function PhimHay() {
         },
       },
     ],
+  };
+
+  let sliderRef = useRef<any>(null);
+  // const play = () => {
+  //   sliderRef.current?.slickPlay();
+  // };
+  // const pause = () => {
+  //   sliderRef.current?.slickPause();
+  // };
+
+  const settingsComment = {
+    infinite: false,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    //autoplay: true,
+    autoplaySpeed: 2000,
   };
   return (
     <div className="bg-[#191B24]">
@@ -511,6 +528,84 @@ export default function PhimHay() {
                 ).map((item: IMovie, key) => (
                   <ModalCard key={key} Movie={item} />
                 ))}
+              </Slider>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
+        <div>
+          <div>
+            <FontAwesomeIcon
+              icon={faAward}
+              style={{ fontSize: "13px", paddingLeft: "5px" }}
+            />
+            <h1>TOP BÌNH LUẬN</h1>
+          </div>
+          <div>
+            <div className="slider-container">
+              <Slider
+                ref={(slider: any) => (sliderRef = slider)}
+                {...settingsComment}
+              >
+                <div>
+                  <div className="relative rounded mr-[20px]">
+                    <img
+                      className="blur-sm w-full h-auto"
+                      src="/koreanmovie1.jpg"
+                      alt=""
+                    />
+                    <div className="absolute p-[20px] top-0 left-0 w-full z-[20]">
+                      <div className="flex items-center justify-between">
+                        <div className=" flex flex-col justify-between items-center ">
+                          <img
+                            src="/avatar.jpg"
+                            width={46}
+                            className="rounded-full w-[46] h-[46]"
+                            height={46}
+                            alt=""
+                          />
+                          <h1 className="text-[14px] pt-[5px] font-bold">
+                            Thomas
+                          </h1>
+                        </div>
+                        <div className="w-[50px] h-[75px]">
+                          <img
+                            src="/comment1.jpg"
+                            className=" w-full rounded h-auto"
+                            width={50}
+                            height={75}
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3>2</h3>
+                </div>
+                <div>
+                  <h3>3</h3>
+                </div>
+                <div>
+                  <h3>4</h3>
+                </div>
+                <div>
+                  <h3>5</h3>
+                </div>
+                <div>
+                  <h3>6</h3>
+                </div>
+                <div>
+                  <h3>4</h3>
+                </div>
+                <div>
+                  <h3>5</h3>
+                </div>
+                <div>
+                  <h3>6</h3>
+                </div>
               </Slider>
             </div>
           </div>
