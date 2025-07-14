@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "echo \"Skip test (no tests defined)\" && exit 0"
   },
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
