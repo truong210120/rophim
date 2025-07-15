@@ -1,10 +1,15 @@
 "use client";
 import {
   faAngleRight,
+  faArrowDown,
   faArrowRight,
+  faArrowUp,
   faAward,
+  faCircleDown,
+  faCircleUp,
   faHeart,
   faInfo,
+  faMessage,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,7 +27,7 @@ interface Iimage {
   image: string;
 }
 interface ITopic {
-  topic: string;
+  topic: String;
   topicDirect: string;
   color: string;
 }
@@ -548,45 +553,169 @@ export default function PhimHay() {
                 ref={(slider: any) => (sliderRef = slider)}
                 {...settingsComment}
               >
-                <div>
-                  <div className="relative rounded mr-[20px]">
-                    <img
-                      className="blur-sm w-full h-auto"
-                      src="/koreanmovie1.jpg"
-                      alt=""
-                    />
-                    <div className="absolute p-[20px] top-0 left-0 w-full z-[20]">
-                      <div className="flex items-center justify-between">
-                        <div className=" flex flex-col justify-between items-center ">
-                          <img
-                            src="/avatar.jpg"
-                            width={46}
-                            className="rounded-full w-[46] h-[46]"
-                            height={46}
-                            alt=""
-                          />
-                          <h1 className="text-[14px] pt-[5px] font-bold">
-                            Thomas
-                          </h1>
+                <div className="pr-[15px] group cursor-pointer">
+                  <div className="relative w-[303px] h-[228px] rounded-[8px]">
+                    <div className="">
+                      <div className="opacity-[0.5] rounded-[8px] group-hover:opacity-[1] mask-[linear-gradient(180deg,black_0%,transparent_80%)]">
+                        <Image
+                          className=" w-full blur-[5px] h-full rounded-[8px]"
+                          src="/koreanmovie1.jpg"
+                          width={303}
+                          height={207}
+                          alt=""
+                        />
+                      </div>
+                      <div className="absolute p-[20px] top-0 h-full left-0 w-full z-[20]">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <div className=" rounded-full">
+                              <img
+                                src="/avatar.jpg"
+                                width={46}
+                                className="rounded-full border-transparent border-1 group-hover:border-white w-[46] h-[46]"
+                                height={46}
+                                alt=""
+                              />
+                            </div>
+                            <h1 className="text-[14px] pt-[8px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <img
+                              src="/comment1.jpg"
+                              className=" w-full rounded-[8px] h-auto"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
                         </div>
-                        <div className="w-[50px] h-[75px]">
-                          <img
-                            src="/comment1.jpg"
-                            className=" w-full rounded h-auto"
-                            width={50}
-                            height={75}
-                            alt=""
-                          />
+                        <div className="py-[10px]">
+                          <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
+                            Phim hay lắm nhé
+                          </p>
+                          <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
+                            Phim hay lắm nhé
+                          </p>
+                        </div>
+                        <div className="flex gap-[10px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                paddingRight: "3px",
+                                color: "#fff8",
+                              }}
+                            />
+                            <span className="text-[12px] text-[#fff8]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                paddingRight: "3px",
+                                color: "#fff8",
+                              }}
+                            />
+                            <span className="text-[12px] text-[#fff8]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                paddingRight: "3px",
+                                color: "#fff8",
+                              }}
+                            />
+                            <span className="text-[12px] text-[#fff8]">4</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <h3>2</h3>
-                </div>
-                <div>
-                  <h3>3</h3>
+                <div className="relative">
+                  <Image
+                    className=" w-full blur-[5px] h-full rounded-[8px]"
+                    src="/koreanmovie1.jpg"
+                    width={303}
+                    height={207}
+                    alt=""
+                  />
+                  <div className="absolute p-[20px] top-0 h-full left-0 w-full z-[20]">
+                    <div className="flex items-center justify-between">
+                      <div className=" flex flex-col justify-between items-center ">
+                        <div className=" rounded-full">
+                          <img
+                            src="/avatar.jpg"
+                            width={46}
+                            className="rounded-full border-transparent border-1 group-hover:border-white w-[46] h-[46]"
+                            height={46}
+                            alt=""
+                          />
+                        </div>
+                        <h1 className="text-[14px] pt-[8px] font-bold">
+                          Thomas
+                        </h1>
+                      </div>
+                      <div className="w-[50px] h-[75px]">
+                        <img
+                          src="/comment1.jpg"
+                          className=" w-full rounded-[8px] h-auto"
+                          width={50}
+                          height={75}
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div className="py-[10px]">
+                      <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
+                        Phim hay lắm nhé
+                      </p>
+                      <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
+                        Phim hay lắm nhé
+                      </p>
+                    </div>
+                    <div className="flex gap-[10px]">
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCircleUp}
+                          style={{
+                            fontSize: "12px",
+                            paddingRight: "3px",
+                            color: "#fff8",
+                          }}
+                        />
+                        <span className="text-[12px] text-[#fff8]">4</span>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCircleDown}
+                          style={{
+                            fontSize: "12px",
+                            paddingRight: "3px",
+                            color: "#fff8",
+                          }}
+                        />
+                        <span className="text-[12px] text-[#fff8]">4</span>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faMessage}
+                          style={{
+                            fontSize: "12px",
+                            paddingRight: "3px",
+                            color: "#fff8",
+                          }}
+                        />
+                        <span className="text-[12px] text-[#fff8]">4</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <h3>4</h3>
