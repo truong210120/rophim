@@ -1,19 +1,19 @@
 "use client";
 import {
   faAngleRight,
-  faArrowDown,
-  faArrowRight,
-  faArrowUp,
   faAward,
+  faChevronLeft,
+  faChevronRight,
   faCircleDown,
   faCircleUp,
+  faClapperboard,
   faHeart,
   faInfo,
   faMessage,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Tag } from "antd";
+import { Button, Tag } from "antd";
 import Image from "next/image";
 import Slider from "react-slick";
 import { toast } from "react-toastify";
@@ -23,11 +23,12 @@ import { useRouter } from "next/navigation";
 import { IMovie } from "../interface";
 import ModalCard from "@/component/ModalCard";
 import { useRef } from "react";
+import CardMovieTrend from "@/component/CardMovieTrend";
 interface Iimage {
   image: string;
 }
 interface ITopic {
-  topic: String;
+  topic: string;
   topicDirect: string;
   color: string;
 }
@@ -228,18 +229,20 @@ export default function PhimHay() {
   };
 
   let sliderRef = useRef<any>(null);
-  // const play = () => {
-  //   sliderRef.current?.slickPlay();
-  // };
-  // const pause = () => {
-  //   sliderRef.current?.slickPause();
-  // };
+  const next = () => {
+    sliderRef.current?.slickNext();
+  };
+  const prev = () => {
+    console.log("prev", sliderRef.current?.slickPrev());
+    sliderRef.current?.slickPrev();
+  };
 
   const settingsComment = {
     infinite: false,
     slidesToShow: 6,
+    arrows: false,
     slidesToScroll: 1,
-    //autoplay: true,
+    autoplay: true,
     autoplaySpeed: 2000,
   };
   return (
@@ -539,203 +542,967 @@ export default function PhimHay() {
         </div>
       </div>
       <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
-        <div>
-          <div>
-            <FontAwesomeIcon
-              icon={faAward}
-              style={{ fontSize: "13px", paddingLeft: "5px" }}
-            />
-            <h1>TOP BÌNH LUẬN</h1>
-          </div>
-          <div>
-            <div className="slider-container">
-              <Slider
-                ref={(slider: any) => (sliderRef = slider)}
-                {...settingsComment}
-              >
-                <div className="pr-[15px] group cursor-pointer">
-                  <div className="relative w-[303px] h-[228px] rounded-[8px]">
-                    <div className="">
-                      <div className="opacity-[0.5] rounded-[8px] group-hover:opacity-[1] mask-[linear-gradient(180deg,black_0%,transparent_80%)]">
-                        <Image
-                          className=" w-full blur-[5px] h-full rounded-[8px]"
-                          src="/koreanmovie1.jpg"
-                          width={303}
-                          height={207}
-                          alt=""
-                        />
-                      </div>
-                      <div className="absolute p-[20px] top-0 h-full left-0 w-full z-[20]">
+        <div className="border-[#fff2] border-[1px] rounded-[16px]">
+          <div className="pt-[24px] border-b-[1px] relative border-b-[#fff2] px-[32px]">
+            <div className="flex  items-center">
+              <FontAwesomeIcon
+                icon={faAward}
+                style={{
+                  fontSize: "16px",
+                  paddingLeft: "5px",
+                  color: "#FFD875",
+                }}
+              />
+              <h1 className="text-[16px] font-bold pl-[10px] text-white">
+                TOP BÌNH LUẬN
+              </h1>
+            </div>
+            <div className="py-[20px]">
+              <div className="slider-container">
+                <button
+                  onClick={prev}
+                  className="w-[40px] bg-[#191B24] absolute left-[-20] top-[40%] cursor-pointer flex justify-center items-center h-[40px] border-[1px] border-[#fff2] rounded-full"
+                >
+                  <FontAwesomeIcon
+                    icon={faChevronLeft}
+                    style={{
+                      fontSize: "13px",
+                      color: "white",
+                    }}
+                  />
+                </button>
+                <Slider ref={sliderRef} {...settingsComment}>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
                         <div className="flex items-center justify-between">
                           <div className=" flex flex-col justify-between items-center ">
-                            <div className=" rounded-full">
-                              <img
-                                src="/avatar.jpg"
-                                width={46}
-                                className="rounded-full border-transparent border-1 group-hover:border-white w-[46] h-[46]"
-                                height={46}
-                                alt=""
-                              />
-                            </div>
-                            <h1 className="text-[14px] pt-[8px] font-bold">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
                               Thomas
                             </h1>
                           </div>
                           <div className="w-[50px] h-[75px]">
-                            <img
+                            <Image
                               src="/comment1.jpg"
-                              className=" w-full rounded-[8px] h-auto"
+                              className=" w-full rounded h-full"
                               width={50}
                               height={75}
                               alt=""
                             />
                           </div>
                         </div>
-                        <div className="py-[10px]">
-                          <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
-                            Phim hay lắm nhé
-                          </p>
-                          <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
-                            Phim hay lắm nhé
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
                           </p>
                         </div>
-                        <div className="flex gap-[10px]">
+                        <div className="flex gap-4 pt-[15px]">
                           <div>
                             <FontAwesomeIcon
                               icon={faCircleUp}
                               style={{
                                 fontSize: "12px",
-                                paddingRight: "3px",
                                 color: "#fff8",
+                                paddingRight: "5px",
                               }}
                             />
-                            <span className="text-[12px] text-[#fff8]">4</span>
+                            <span className="text-[#fff8] text-[12px]">4</span>
                           </div>
                           <div>
                             <FontAwesomeIcon
                               icon={faCircleDown}
                               style={{
                                 fontSize: "12px",
-                                paddingRight: "3px",
                                 color: "#fff8",
+                                paddingRight: "5px",
                               }}
                             />
-                            <span className="text-[12px] text-[#fff8]">4</span>
+                            <span className="text-[#fff8] text-[12px]">4</span>
                           </div>
                           <div>
                             <FontAwesomeIcon
                               icon={faMessage}
                               style={{
                                 fontSize: "12px",
-                                paddingRight: "3px",
                                 color: "#fff8",
+                                paddingRight: "5px",
                               }}
                             />
-                            <span className="text-[12px] text-[#fff8]">4</span>
+                            <span className="text-[#fff8] text-[12px]">4</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="relative">
-                  <Image
-                    className=" w-full blur-[5px] h-full rounded-[8px]"
-                    src="/koreanmovie1.jpg"
-                    width={303}
-                    height={207}
-                    alt=""
-                  />
-                  <div className="absolute p-[20px] top-0 h-full left-0 w-full z-[20]">
-                    <div className="flex items-center justify-between">
-                      <div className=" flex flex-col justify-between items-center ">
-                        <div className=" rounded-full">
-                          <img
-                            src="/avatar.jpg"
-                            width={46}
-                            className="rounded-full border-transparent border-1 group-hover:border-white w-[46] h-[46]"
-                            height={46}
-                            alt=""
-                          />
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
                         </div>
-                        <h1 className="text-[14px] pt-[8px] font-bold">
-                          Thomas
-                        </h1>
-                      </div>
-                      <div className="w-[50px] h-[75px]">
-                        <img
-                          src="/comment1.jpg"
-                          className=" w-full rounded-[8px] h-auto"
-                          width={50}
-                          height={75}
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div className="py-[10px]">
-                      <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
-                        Phim hay lắm nhé
-                      </p>
-                      <p className="whitespace-nowrap text-[13px] text-[#fff8] overflow-hidden text-ellipsis">
-                        Phim hay lắm nhé
-                      </p>
-                    </div>
-                    <div className="flex gap-[10px]">
-                      <div>
-                        <FontAwesomeIcon
-                          icon={faCircleUp}
-                          style={{
-                            fontSize: "12px",
-                            paddingRight: "3px",
-                            color: "#fff8",
-                          }}
-                        />
-                        <span className="text-[12px] text-[#fff8]">4</span>
-                      </div>
-                      <div>
-                        <FontAwesomeIcon
-                          icon={faCircleDown}
-                          style={{
-                            fontSize: "12px",
-                            paddingRight: "3px",
-                            color: "#fff8",
-                          }}
-                        />
-                        <span className="text-[12px] text-[#fff8]">4</span>
-                      </div>
-                      <div>
-                        <FontAwesomeIcon
-                          icon={faMessage}
-                          style={{
-                            fontSize: "12px",
-                            paddingRight: "3px",
-                            color: "#fff8",
-                          }}
-                        />
-                        <span className="text-[12px] text-[#fff8]">4</span>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <h3>4</h3>
-                </div>
-                <div>
-                  <h3>5</h3>
-                </div>
-                <div>
-                  <h3>6</h3>
-                </div>
-                <div>
-                  <h3>4</h3>
-                </div>
-                <div>
-                  <h3>5</h3>
-                </div>
-                <div>
-                  <h3>6</h3>
-                </div>
-              </Slider>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pr-[15px] cursor-pointer group">
+                    <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
+                      <Image
+                        width={303}
+                        height={230}
+                        className="w-full absolute rounded-[15px] [mask-image:linear-gradient(180deg,_black_0%,_transparent_80%)] blur-[5px] opacity-[0.5] group-hover:opacity-[0.9] [mask-repeat:no-repeat] top-0 object-cover left-0 right-0 bottom-0 h-full"
+                        src="/comment1.jpg"
+                        alt=""
+                      />
+                      <div className="absolute  p-[20px] top-0 left-0 w-full z-100">
+                        <div className="flex items-center justify-between">
+                          <div className=" flex flex-col justify-between items-center ">
+                            <img
+                              src="/avatar.jpg"
+                              width={46}
+                              className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                              height={46}
+                              alt=""
+                            />
+                            <h1 className="text-[14px] text-white pt-[15px] font-bold">
+                              Thomas
+                            </h1>
+                          </div>
+                          <div className="w-[50px] h-[75px]">
+                            <Image
+                              src="/comment1.jpg"
+                              className=" w-full rounded h-full"
+                              width={50}
+                              height={75}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <div className="py-[8px]">
+                          <p className="text-[#fff8] text-[13px] leading-6 line-clamp-2">
+                            {" "}
+                            Phim hay quá đi à Phim hay quá đi àPhim hay quá đi
+                            đi àPhim hay quá điàPhim hay quá đi à Phim hay quá
+                            đi à Phim hay quá đi à
+                          </p>
+                        </div>
+                        <div className="flex gap-4 pt-[15px]">
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleUp}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCircleDown}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              style={{
+                                fontSize: "12px",
+                                color: "#fff8",
+                                paddingRight: "5px",
+                              }}
+                            />
+                            <span className="text-[#fff8] text-[12px]">4</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Slider>
+                <button
+                  onClick={next}
+                  className="w-[40px] bg-[#191B24] absolute right-[-20px] top-[40%] cursor-pointer flex justify-center items-center h-[40px] border-[1px] border-[#fff2] rounded-full"
+                >
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    style={{
+                      fontSize: "13px",
+                      color: "white",
+                    }}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="flex">
+            <div className="border-r-[1px] border-r-[#fff2] px-[32px] py-[24px] w-[420px]">
+              <div className="flex pb-[24px] items-center">
+                <FontAwesomeIcon
+                  icon={faClapperboard}
+                  style={{
+                    fontSize: "16px",
+                    paddingLeft: "5px",
+                    color: "#FFD875",
+                  }}
+                />
+                <h1 className="text-[16px] font-bold pl-[10px] text-white">
+                  SÔI NỔI NHẤT
+                </h1>
+              </div>
+              <div className="">
+                {ListMovie.ListMovie.slice(0, 5).map((item, index) => (
+                  <CardMovieTrend id={index} Movie={item} />
+                ))}
+                <button className="text-[#fff5] cursor-pointer text-[12px] hover:text-[#f0d25c]">
+                  Xem thêm
+                </button>
+              </div>
+            </div>
+            <div className="border-r-[1px] border-r-[#fff2] px-[32px] py-[24px] w-[420px]">
+              <div className="flex pb-[24px] items-center">
+                <FontAwesomeIcon
+                  icon={faClapperboard}
+                  style={{
+                    fontSize: "16px",
+                    paddingLeft: "5px",
+                    color: "#FFD875",
+                  }}
+                />
+                <h1 className="text-[16px] font-bold pl-[10px] text-white">
+                  YÊU THÍCH NHẤT
+                </h1>
+              </div>
+              <div className="">
+                {ListMovie.ListMovie.slice(4, 9).map((item, index) => (
+                  <CardMovieTrend id={index} Movie={item} />
+                ))}
+                <button className="text-[#fff5] cursor-pointer text-[12px] hover:text-[#f0d25c]">
+                  Xem thêm
+                </button>
+              </div>
             </div>
           </div>
         </div>
