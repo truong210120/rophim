@@ -2,12 +2,15 @@
 import {
   faAngleRight,
   faAward,
+  faBolt,
   faChevronLeft,
   faChevronRight,
   faCircleDown,
   faCircleUp,
   faClapperboard,
+  faFolderPlus,
   faHeart,
+  faHeartCircleCheck,
   faInfo,
   faMessage,
   faPlay,
@@ -20,10 +23,14 @@ import { toast } from "react-toastify";
 import Topic from "@/data/phimhay";
 import ListMovie from "@/data/phimhay";
 import { useRouter } from "next/navigation";
-import { IMovie } from "../interface";
+import { IMovie, IMovieNew } from "../interface";
 import ModalCard from "@/component/ModalCard";
 import { useRef } from "react";
 import CardMovieTrend from "@/component/CardMovieTrend";
+import MoviewNew from "@/component/MovieNew";
+import Title from "../element/title";
+import MoviePage from "@/component/MoviePage";
+import MovieTheater from "@/component/MovieTheater";
 interface Iimage {
   image: string;
 }
@@ -208,7 +215,7 @@ export default function PhimHay() {
     infinite: false,
     speed: 500,
     slidesToScroll: 4,
-    slidesToShow: 5,
+    slidesToShow: 4,
     pauseOnHover: false,
     responsive: [
       {
@@ -241,9 +248,144 @@ export default function PhimHay() {
     infinite: false,
     slidesToShow: 6,
     arrows: false,
+    slidesToScroll: 6,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 950,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
+  };
+  const settingsCommentList = {
+    infinite: true,
+    slidesToShow: 4,
+    arrows: false,
+    vertical: true,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
+  };
+  const settingsMovieTheater = {
+    slidesToShow: 4,
+    arrows: false,
+    slidesToScroll: 1,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 1025,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
+  };
+  const settingMovieNews = {
+    infinite: false,
+    slidesToShow: 8,
+    arrows: false,
+    slidesToScroll: 1,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 7,
+          slidesToScroll: 7,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 6,
+        },
+      },
+      {
+        breakpoint: 950,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+        },
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+    ],
+  };
+  const settingsTop10Movie = {
+    infinite: false,
+    slidesToShow: 6,
+    arrows: false,
+    slidesToScroll: 1,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+        },
+      },
+      {
+        breakpoint: 1250,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 950,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
   return (
     <div className="bg-[#191B24]">
@@ -328,12 +470,20 @@ export default function PhimHay() {
                     </span>
                   </div>
                 </div>
-                <div className="mb-[24px] mt-[12px] max-[750px]:mb-[10px]">
+                <div className="mb-[24px] max-[750px]:hidden mt-[12px] max-[750px]:mb-[10px]">
                   {item.typeMovie.map((type, idx) => (
                     <Tag color="#ffffff10" key={idx}>
                       {type}
                     </Tag>
                   ))}
+                </div>
+                <div className="mb-[24px] mt-[12px] max-[750px]:mb-[10px]">
+                  {item.typeMovie.slice(0, 3).map((type, idx) => (
+                    <Tag color="#ffffff10" key={idx}>
+                      {type}
+                    </Tag>
+                  ))}
+                  <Tag>+{item.typeMovie.length - 3}</Tag>
                 </div>
                 <div className="mb-[32px] h-[68px] max-[120px]:mb-[20px] max-[750px]:hidden">
                   <p className="line-clamp-3 leading-[1.6] text-[14px]">
@@ -543,7 +693,7 @@ export default function PhimHay() {
       </div>
       <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
         <div className="border-[#fff2] border-[1px] rounded-[16px]">
-          <div className="pt-[24px] border-b-[1px] relative border-b-[#fff2] px-[32px]">
+          <div className="pt-[24px] border-b-[1px] relative border-b-[#fff2] px-[32px] max-[650px]:px-[16px]">
             <div className="flex  items-center">
               <FontAwesomeIcon
                 icon={faAward}
@@ -561,7 +711,7 @@ export default function PhimHay() {
               <div className="slider-container">
                 <button
                   onClick={prev}
-                  className="w-[40px] bg-[#191B24] absolute left-[-20] top-[40%] cursor-pointer flex justify-center items-center h-[40px] border-[1px] border-[#fff2] rounded-full"
+                  className="w-[40px] max-[450px]:hidden bg-[#191B24] absolute left-[-20] top-[40%] cursor-pointer flex justify-center items-center h-[40px] border-[1px] border-[#fff2] rounded-full"
                 >
                   <FontAwesomeIcon
                     icon={faChevronLeft}
@@ -572,7 +722,7 @@ export default function PhimHay() {
                   />
                 </button>
                 <Slider ref={sliderRef} {...settingsComment}>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -651,7 +801,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -730,7 +880,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -809,7 +959,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -888,7 +1038,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -967,7 +1117,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -1046,7 +1196,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -1125,7 +1275,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -1204,7 +1354,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -1283,7 +1433,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -1362,7 +1512,7 @@ export default function PhimHay() {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-[15px] cursor-pointer group">
+                  <div className="px-[5px] cursor-pointer group">
                     <div className="relative  rounded h-full min-h-[230px] w-full mr-[20px]">
                       <Image
                         width={303}
@@ -1444,7 +1594,7 @@ export default function PhimHay() {
                 </Slider>
                 <button
                   onClick={next}
-                  className="w-[40px] bg-[#191B24] absolute right-[-20px] top-[40%] cursor-pointer flex justify-center items-center h-[40px] border-[1px] border-[#fff2] rounded-full"
+                  className="w-[40px] max-[450px]:hidden bg-[#191B24] absolute right-[-20px] top-[40%] cursor-pointer flex justify-center items-center h-[40px] border-[1px] border-[#fff2] rounded-full"
                 >
                   <FontAwesomeIcon
                     icon={faChevronRight}
@@ -1457,8 +1607,8 @@ export default function PhimHay() {
               </div>
             </div>
           </div>
-          <div className="flex">
-            <div className="border-r-[1px] border-r-[#fff2] px-[32px] py-[24px] w-[420px]">
+          <div className="flex max-[650px]:block ">
+            <div className="border-r-[1px] border-r-[#fff2] px-[32px] max-[650px]:border-b-[1px] max-[650px]:border-[#fff2] max-[1600px]:grow max-[650px]:w-full max-[650px]:border-r-0  max-[1600px]:w-[320px] py-[24px] flex-none w-[420px]">
               <div className="flex pb-[24px] items-center">
                 <FontAwesomeIcon
                   icon={faClapperboard}
@@ -1473,18 +1623,20 @@ export default function PhimHay() {
                 </h1>
               </div>
               <div className="">
-                {ListMovie.ListMovie.slice(0, 5).map((item, index) => (
-                  <CardMovieTrend id={index} Movie={item} />
+                {ListMovie.ListMovie.slice(0, 5).map((item, key) => (
+                  <div key={key}>
+                    <CardMovieTrend index={key} Movie={item} />
+                  </div>
                 ))}
                 <button className="text-[#fff5] cursor-pointer text-[12px] hover:text-[#f0d25c]">
                   Xem thêm
                 </button>
               </div>
             </div>
-            <div className="border-r-[1px] border-r-[#fff2] px-[32px] py-[24px] w-[420px]">
+            <div className="border-r-[1px] border-r-[#fff2] px-[32px] max-[1600px]:grow max-[650px]:w-full max-[650px]:border-r-0  max-[1600px]:w-[320px] py-[24px] flex-none w-[420px]">
               <div className="flex pb-[24px] items-center">
                 <FontAwesomeIcon
-                  icon={faClapperboard}
+                  icon={faHeartCircleCheck}
                   style={{
                     fontSize: "16px",
                     paddingLeft: "5px",
@@ -1496,16 +1648,326 @@ export default function PhimHay() {
                 </h1>
               </div>
               <div className="">
-                {ListMovie.ListMovie.slice(4, 9).map((item, index) => (
-                  <CardMovieTrend id={index} Movie={item} />
+                {ListMovie.ListMovie.slice(4, 9).map((item, key) => (
+                  <div key={key}>
+                    <CardMovieTrend index={key} Movie={item} />
+                  </div>
                 ))}
                 <button className="text-[#fff5] cursor-pointer text-[12px] hover:text-[#f0d25c]">
                   Xem thêm
                 </button>
               </div>
             </div>
+            <div className="border-r-[1px] border-r-[#fff2] max-[1600px]:hidden px-[32px] py-[24px] flex-none w-[320px]">
+              <div className="flex pb-[24px] items-center">
+                <FontAwesomeIcon
+                  icon={faFolderPlus}
+                  style={{
+                    fontSize: "16px",
+                    paddingLeft: "5px",
+                    color: "#FFD875",
+                  }}
+                />
+                <h1 className="text-[16px] font-bold pl-[10px] text-white">
+                  THỂ LOẠI HOT
+                </h1>
+              </div>
+              <div className="">
+                {Topic.Topic.slice(0, 5).map((item, key) => (
+                  <div key={key} className="h-[50px] flex items-center">
+                    <div>
+                      <div className="flex gap-[20px] items-center">
+                        <span className="text-[#fff5] font-bold">
+                          {key + 1}.
+                        </span>
+                        <span className="pb-[15px] text-[#fff5] font-bold">
+                          _
+                        </span>
+                        <button
+                          style={{ background: `${item.color}` }}
+                          className="text-white text-[13px] px-[14px] cursor-pointer hover:text-[#FFD875] rounded-full py-[3px]"
+                        >
+                          {item.topic}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <button className="text-[#fff5] cursor-pointer text-[12px] hover:text-[#f0d25c]">
+                  Xem thêm
+                </button>
+              </div>
+            </div>
+            <div className=" px-[32px] max-[995px]:hidden  py-[20px] grow w-[300px]">
+              <div className="flex pb-[24px] items-center">
+                <FontAwesomeIcon
+                  icon={faBolt}
+                  style={{
+                    fontSize: "16px",
+                    paddingLeft: "5px",
+                    color: "#FFD875",
+                  }}
+                />
+                <h1 className="text-[16px] font-bold pl-[10px] text-white">
+                  BÌNH LUẬN MỚI
+                </h1>
+              </div>
+              <div className="">
+                <Slider {...settingsCommentList}>
+                  <div className="my-[2px]">
+                    <div className="flex bg-black rounded-[10px] px-[10px] py-[10px] items-center gap-[15px]">
+                      <div>
+                        <img
+                          src="/avatar.jpg"
+                          width={46}
+                          className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                          height={46}
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <div className="text-[12px] pb-[2px] flex items-center gap-[10px]">
+                          <span className="text-white">Thomas</span>
+                          <p className=" text-[#aaa]">Phim vớ vẩn quá</p>
+                        </div>
+                        <div className="flex items-center gap-[10px]">
+                          <FontAwesomeIcon
+                            icon={faPlay}
+                            style={{
+                              fontSize: "10px",
+                              paddingLeft: "5px",
+                              color: "#FFD875",
+                            }}
+                          />
+                          <p className="whitespace-nowrap cursor-pointer  overflow-hidden text-ellipsis text-[#fff5] text-[12px]">
+                            Ngưu lang chức nữ
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-[2px]">
+                    <div className="flex bg-black rounded-[10px] px-[10px] py-[10px] items-center gap-[15px]">
+                      <div>
+                        <img
+                          src="/avatar.jpg"
+                          width={46}
+                          className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                          height={46}
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <div className="text-[12px] pb-[2px] flex items-center gap-[10px]">
+                          <span className="text-white">Thomas</span>
+                          <p className=" text-[#aaa]">Phim vớ vẩn quá</p>
+                        </div>
+                        <div className="flex items-center gap-[10px]">
+                          <FontAwesomeIcon
+                            icon={faPlay}
+                            style={{
+                              fontSize: "10px",
+                              paddingLeft: "5px",
+                              color: "#FFD875",
+                            }}
+                          />
+                          <p className="whitespace-nowrap cursor-pointer  overflow-hidden text-ellipsis text-[#fff5] text-[12px]">
+                            Ngưu lang chức nữ
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-[2px]">
+                    <div className="flex bg-black rounded-[10px] px-[10px] py-[10px] items-center gap-[15px]">
+                      <div>
+                        <img
+                          src="/avatar.jpg"
+                          width={46}
+                          className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                          height={46}
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <div className="text-[12px] pb-[2px] flex items-center gap-[10px]">
+                          <span className="text-white">Thomas</span>
+                          <p className=" text-[#aaa]">Phim vớ vẩn quá</p>
+                        </div>
+                        <div className="flex items-center gap-[10px]">
+                          <FontAwesomeIcon
+                            icon={faPlay}
+                            style={{
+                              fontSize: "10px",
+                              paddingLeft: "5px",
+                              color: "#FFD875",
+                            }}
+                          />
+                          <p className="whitespace-nowrap cursor-pointer  overflow-hidden text-ellipsis text-[#fff5] text-[12px]">
+                            Ngưu lang chức nữ
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-[2px]">
+                    <div className="flex bg-black rounded-[10px] px-[10px] py-[10px] items-center gap-[15px]">
+                      <div>
+                        <img
+                          src="/avatar.jpg"
+                          width={46}
+                          className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                          height={46}
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <div className="text-[12px] pb-[2px] flex items-center gap-[10px]">
+                          <span className="text-white">Thomas</span>
+                          <p className=" text-[#aaa]">Phim vớ vẩn quá</p>
+                        </div>
+                        <div className="flex items-center gap-[10px]">
+                          <FontAwesomeIcon
+                            icon={faPlay}
+                            style={{
+                              fontSize: "10px",
+                              paddingLeft: "5px",
+                              color: "#FFD875",
+                            }}
+                          />
+                          <p className="whitespace-nowrap cursor-pointer  overflow-hidden text-ellipsis text-[#fff5] text-[12px]">
+                            Ngưu lang chức nữ
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-[2px]">
+                    <div className="flex bg-black rounded-[10px] px-[10px] py-[10px] items-center gap-[15px]">
+                      <div>
+                        <img
+                          src="/avatar.jpg"
+                          width={46}
+                          className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                          height={46}
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <div className="text-[12px] pb-[2px] flex items-center gap-[10px]">
+                          <span className="text-white">Thomas</span>
+                          <p className=" text-[#aaa]">Phim vớ vẩn quá</p>
+                        </div>
+                        <div className="flex items-center gap-[10px]">
+                          <FontAwesomeIcon
+                            icon={faPlay}
+                            style={{
+                              fontSize: "10px",
+                              paddingLeft: "5px",
+                              color: "#FFD875",
+                            }}
+                          />
+                          <p className="whitespace-nowrap cursor-pointer  overflow-hidden text-ellipsis text-[#fff5] text-[12px]">
+                            Ngưu lang chức nữ
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="my-[2px]">
+                    <div className="flex bg-black rounded-[10px] px-[10px] py-[10px] items-center gap-[15px]">
+                      <div>
+                        <img
+                          src="/avatar.jpg"
+                          width={46}
+                          className="rounded-full border-transparent border-[1px] group-hover:border-white group-hover:border-[1px] w-[46] h-[46]"
+                          height={46}
+                          alt=""
+                        />
+                      </div>
+                      <div className="">
+                        <div className="text-[12px] pb-[2px] flex items-center gap-[10px]">
+                          <span className="text-white">Thomas</span>
+                          <p className=" text-[#aaa]">Phim vớ vẩn quá</p>
+                        </div>
+                        <div className="flex items-center gap-[10px]">
+                          <FontAwesomeIcon
+                            icon={faPlay}
+                            style={{
+                              fontSize: "10px",
+                              paddingLeft: "5px",
+                              color: "#FFD875",
+                            }}
+                          />
+                          <p className="whitespace-nowrap cursor-pointer  overflow-hidden text-ellipsis text-[#fff5] text-[12px]">
+                            Ngưu lang chức nữ
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Slider>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
+        <Title title="Phim Điện Ảnh Mới Cóong" />
+        <div>
+          <Slider {...settingMovieNews}>
+            {ListMovie.ListNewMovie.map((item: IMovieNew, key) => (
+              <MoviewNew key={key} Movie={item} />
+            ))}
+          </Slider>
+        </div>
+      </div>
+      <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
+        <Title title="Top 10 Phim Bộ Hôm Nay" />
+        <div>
+          <Slider {...settingsTop10Movie}>
+            {ListMovie.ListNewMovie.slice(0, 10).map((item: IMovieNew, key) => (
+              <MoviePage index={key} key={key} Movie={item} />
+            ))}
+          </Slider>
+        </div>
+      </div>
+      <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
+        <Title title="Mãn Nhãn Với Phim Chiếu Rạp" />
+        <div>
+          <Slider {...settingsMovieTheater}>
+            {ListMovie.ListNewMovie.slice(0, 10).map((item: IMovieNew, key) => (
+              <MovieTheater key={key} Movie={item} />
+            ))}
+          </Slider>
+        </div>
+      </div>
+      <div className="container px-[50px] pb-[50px] max-[1250px]:px-[20px] max-[750px]:px-[12px] max-w-full">
+        <Title title="Phim Sắp Tới Rổ" />
+        <Slider {...settingsTop10Movie}>
+          {ListMovie.ListMovie.slice(3, 10).map((item: IMovie, key) => (
+            <div key={key} className="cursor-pointer pr-[15px]">
+              <div className="relative">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full rounded-[10px] h-full"
+                  width={303}
+                  height={230}
+                />
+                <span className="absolute bottom-0 left-[20px] rounded-t-[6px] px-[10px] font-bold py-[4px] bg-white text-[#000] text-[11px]">
+                  Sắp chiếu
+                </span>
+              </div>
+              <div className="px-[20px] py-[16px]">
+                <h1 className="text-[14px] hover:text-[#FFD875] font-bold whitespace-nowrap overflow-hidden text-ellipsis">
+                  {item.title}
+                </h1>
+                <h1 className="text-[14px] text-[#aaa]">{item.subTitle}</h1>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
     </div>
   );
